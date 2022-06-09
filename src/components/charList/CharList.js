@@ -14,14 +14,11 @@ function fsm(process, Component, newLoading) {
     switch(process){
         case 'waiting':
             return <Spinner />
-            break;
 
         case 'loading':
             return newLoading ? <Component /> : <Spinner />
-            break;
         case 'confirmed':
             return <Component />
-            break;
         case 'error':
             return <Error />
         default: 

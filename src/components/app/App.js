@@ -6,9 +6,8 @@ import SingleComic from "../singleComic/SingleComic";
 import SingleChar from "../singleComic/SingleChar";
 import SinglePage from "../pages/singlePage";
 import './app.css'
-import AppBanner from "../appBanner/AppBanner";
-const ComicsPage = lazy (() => import("../pages/comicsPage"))
 
+const ComicsPage = lazy (() => import("../pages/comicsPage"))
 const NotFound = lazy(() => import("../pages/404")); 
 
 function App () {

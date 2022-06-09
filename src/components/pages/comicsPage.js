@@ -1,11 +1,17 @@
 import React from 'react'
-import SingleComic from "../singleComic/SingleComic";
 import ComicsList from "../comicsList/ComicsList";
-
+import Helmet from 'react-helmet';
 
 function ComicsPage() {
   return (
     <>
+    <Helmet>
+        <meta
+          name="description"
+          content="Marvel Comics Page"
+        />
+    <title>Marvel All Comics Page</title>
+        </Helmet>
     <ComicsList /> 
     </>
   )
