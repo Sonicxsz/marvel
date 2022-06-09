@@ -1,43 +1,49 @@
 import AppHeader from "../appHeader/AppHeader";
-import RandomChar from "../randomChar/RandomChar";
-import CharList from "../charList/CharList";
-import CharInfo from "../charInfo/CharInfo";
-import {Component} from 'react'
-import decoration from '../../resources/img/vision.png';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import {lazy, Suspense} from 'react';
+import CharPage from "../pages/charPage";
+import SingleComic from "../singleComic/SingleComic";
+import SingleChar from "../singleComic/SingleChar";
+import SinglePage from "../pages/singlePage";
+import './app.css'
+import AppBanner from "../appBanner/AppBanner";
+const ComicsPage = lazy (() => import("../pages/comicsPage"))
 
+const NotFound = lazy(() => import("../pages/404")); 
 
+function App () {
+   
 
- class App extends Component {
-    state = {
-        characterId: null,
-
-    }
-
-    getCharID = (id) => {
-        this.setState({
-            characterId: id
-        })
-       
-    }
-    componentDidUpdate(){
-      
-    }
-
-   render(){
     return (
+       <Suspense fallback={<div>Loading...pls wait</div>}>
+           <BrowserRouter>
         <div className="app">
             <AppHeader/>
             <main>
-                <RandomChar/>
-                <div className="char__content">
-                    <CharList charID={this.state.characterId} getCharID={this.getCharID}/>
-                    <CharInfo charID={this.state.characterId}/>
-                </div>
-                <img className="bg-decoration" src={decoration} alt="vision"/>
+            <Routes>
+
+                <Route path="/" element={<CharPage />}/>
+                <Route path="/comics" element={ <ComicsPage /> } />
+                <Route path="/comics/:comicId" 
+                    element={<SinglePage 
+                    action={'comic'}
+                    Component={SingleComic}
+                    />} />
+                <Route path="/characters/:charId" 
+                    element={<SinglePage 
+                    action={'char'}
+                    Component={SingleChar}
+                    />} />    
+              
+                
+                <Route path="*" element={<NotFound />}/>
+            </Routes>
             </main>
         </div>
+       </BrowserRouter>
+       </Suspense>
     )
-   }
+   
 }
 
 export default App;

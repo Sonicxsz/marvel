@@ -1,0 +1,18 @@
+.missBtn{
+    display: block;
+    height: 45px;
+    background-color: rgb(221, 13, 13);
+    border: none;
+    border-radius: 3px;
+    padding: 10px 5px;
+    margin: 0 auto;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease-out;
+}
+.missBtn:hover{
+    color: white;
+}
+.missPage{
+    font-size: 20px;
+}

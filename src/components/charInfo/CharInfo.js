@@ -1,61 +1,49 @@
 import './charInfo.scss';
-import {Component} from 'react';
-import GetMarver from '../../services/Server';
-import Spinner from '../spinner/Spinner';
-import Skeleton from '../skeleton/Skeleton';
+import {useState, useEffect} from 'react';
+import useGetMarver from '../../services/Server';
 import Error from '../error/Error';
-import thor from '../../resources/img/thor.jpeg';
+import fsm from '../../util/Fsm';
 
-class CharInfo extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            char:null,
-            loading: false,
-            error: false,
-            comics: null
-     
-         }
+
+function CharInfo ({charID}) {
+    
+    const [char, setChar] = useState(null)
+
+
+    const {getCharacter, process, setPropess} = useGetMarver();
+
+    const charLoaded = (char) =>{
+        setChar(char)
     }
 
-    componentDidUpdate(prevProps){
-        if(prevProps !== this.props){
-            const marvel = new GetMarver();
-            marvel.getCharacter(this.props.charID)
-            .then(res =>{
-                this.setState({char: res,
-                                loading: false})
+    useEffect(() =>{
+        if(charID){
+            getCharacter(charID)
+            .then(charLoaded)
+            .then(() =>{
+                setPropess('confirmed')
             })
-            .catch(() =>{
-                this.setState({error: true})
-            })  
-        }
-         
-      }
+            
+        }   
+          
+    }, [charID])
+    
 
 
-
-
-    render(){
-        const load = this.state.loading ? <Spinner /> : null;
-        const err = this.state.error ? <Error /> : null; 
-        const skelet = load || err || this.state.char ? null : <Skeleton/>
-        const content = !(load || err || !this.state.char) ? <View char={this.state.char}/> : null;
+    
 
         return (
             <div className="char__info">
-                {skelet}
-                {load}
-                {err}
-                {content}
+                {fsm(process, View, char)}
                
             </div>
         )
-    }
+    
 }
 
-function View(props){
-    const {thumbnail, name, description, wiki, homepage, comics} = props.char
+function View({data}){
+    const {thumbnail, name, description, wiki, homepage, comics} = data
+
     const comis = comics.length > 0 ? comics.map((i, index) =>{
         if(index < 10){
             return <li  key={index} className="char__comics-item">
@@ -68,7 +56,9 @@ function View(props){
     return(
         <>
         <div className="char__basics">
-                    <img src={thumbnail} alt="abyss" style={{'objectFit' : 'unset'}}/>
+                    <img onClick={(e)=>{
+                        e.target.classList.toggle('imgUp')
+                    }} src={thumbnail} alt="abyss" style={{'objectFit' : 'unset'}}/>
                     <div>
                         <div className="char__info-name">{name}</div>
                         <div className="char__btns">
@@ -88,7 +78,7 @@ function View(props){
                 <ul className="char__comics-list">
                     {comis}
                 </ul>
-        </>
+     </>
     )
 }
 

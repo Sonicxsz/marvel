@@ -1,0 +1,36 @@
+@import '../../style/variables.scss';
+
+.searchWrap{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    padding: 2rem;
+    box-shadow: 0px 5px 10px rgb(138, 137, 137);
+    margin-top: 2rem;
+    p{
+        font-size: 18px;
+        font-weight: bold;
+    }
+}
+
+.flex_search{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.full{
+    display: block;
+    margin-bottom: 1rem;
+    
+}
+
+#search{
+width: 60%;
+height: 40px;
+padding-left: 5px;
+border: none;
+box-shadow: 0px 5px 10px rgb(138, 137, 137);
+
+}
+

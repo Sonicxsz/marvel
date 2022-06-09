@@ -21,11 +21,14 @@
         display: grid;
         grid-template-columns: 150px auto;
         column-gap: 25px;
+        
         img {
             width: 150px;
             height: 150px;
             object-fit: cover;
+            
         }
+       
     }
     &__btns {
         margin-top: 35px;
@@ -62,4 +65,19 @@
         text-align: center;
     }
 
+}
+
+.fade{
+    opacity: 0;
+
+}
+.fade-enter{
+    opacity: 0;
+
+}
+.fade-enter-active{
+    opacity: 1;
+}
+.fade-enter-done{
+    opacity: 1;
 }
